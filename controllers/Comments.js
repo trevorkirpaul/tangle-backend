@@ -58,3 +58,17 @@ exports.delete = (req, res, next) => {
     }
   });
 };
+
+exports.addLike = (req, res, next) => {
+  const token = readToken(req.body.token);
+  const userID = token.userID;
+  const commentID = req.body.commentID;
+
+  Comment.findByIdAndUpdate(
+    commentID,
+    { $addToSet: { likes: userID } },
+    { new: true }
+  )
+    .then(comment => res.send({ likedComment: true, comment }))
+    .catch(next);
+};

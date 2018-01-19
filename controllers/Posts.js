@@ -27,3 +27,19 @@ exports.delete = (req, res, next) => {
     .then(post => res.send({ postRemoved: true, post }))
     .catch(next);
 };
+
+exports.addLike = (req, res, next) => {
+  const token = readToken(req.body.token);
+  const userID = token.userID;
+  const postID = req.body.postID;
+
+  // using $addToSet prevents duplicate userIDs
+
+  Post.findByIdAndUpdate(
+    postID,
+    { $addToSet: { likes: userID } },
+    { new: true }
+  )
+    .then(post => res.send({ likedPost: true, post }))
+    .catch(next);
+};
