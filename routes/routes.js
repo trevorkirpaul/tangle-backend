@@ -7,4 +7,7 @@ module.exports = app => {
   });
   // user
   app.post('/user', UserController.create);
+  app.post('/token-signin', UserController.tokenSignIn);
+  app.delete('/user', UserController.delete);
+  app.put('/user', UserController.update);
 };

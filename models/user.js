@@ -12,6 +12,18 @@ const UserSchema = new Schema(
     password: {
       type: String,
     },
+    firstName: {
+      type: String,
+    },
+    lastName: {
+      type: String,
+    },
+    favoriteColor: {
+      type: String,
+    },
+    favoriteAnimal: {
+      type: String,
+    },
     active: Boolean,
   },
   { usePushEach: true }
