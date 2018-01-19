@@ -31,6 +31,12 @@ const UserSchema = new Schema(
         ref: 'post',
       },
     ],
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'comment',
+      },
+    ],
   },
   { usePushEach: true }
 );
