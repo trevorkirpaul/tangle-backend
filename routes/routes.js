@@ -1,5 +1,5 @@
 const UserController = require('../controllers/User');
-
+const PostsController = require('../controllers/Posts');
 module.exports = app => {
   // root
   app.get('/', (req, res, next) => {
@@ -10,4 +10,6 @@ module.exports = app => {
   app.post('/token-signin', UserController.tokenSignIn);
   app.delete('/user', UserController.delete);
   app.put('/user', UserController.update);
+  // posts
+  app.post('/post', PostsController.create);
 };

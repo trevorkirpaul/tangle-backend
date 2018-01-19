@@ -25,6 +25,12 @@ const UserSchema = new Schema(
       type: String,
     },
     active: Boolean,
+    posts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'post',
+      },
+    ],
   },
   { usePushEach: true }
 );

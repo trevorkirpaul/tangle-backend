@@ -5,7 +5,7 @@ const { createToken, readToken } = jwt;
 exports.create = (req, res, next) => {
   const user = req.body;
   User.create(user)
-    .then(user => res.send({ token: createToken(user._id) }))
+    .then(user => res.send({ token: createToken(user._id), id: user._id }))
     .catch(next);
 };
 
