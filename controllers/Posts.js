@@ -43,3 +43,13 @@ exports.addLike = (req, res, next) => {
     .then(post => res.send({ likedPost: true, post }))
     .catch(next);
 };
+
+exports.removeLike = (req, res, next) => {
+  const token = readToken(req.body.token);
+  const userID = token.userID;
+  const postID = req.body.postID;
+
+  Post.findByIdAndUpdate(postID, { $pull: { likes: userID } }, { new: true })
+    .then(post => res.send({ removedLike: true, post }))
+    .catch(next);
+};

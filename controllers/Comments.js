@@ -72,3 +72,17 @@ exports.addLike = (req, res, next) => {
     .then(comment => res.send({ likedComment: true, comment }))
     .catch(next);
 };
+
+exports.removeLike = (req, res, next) => {
+  const token = readToken(req.body.token);
+  const userID = token.userID;
+  const commentID = req.body.commentID;
+
+  Comment.findByIdAndUpdate(
+    commentID,
+    { $pull: { likes: userID } },
+    { new: true }
+  )
+    .then(comment => res.send({ removedLike: true, comment }))
+    .catch(next);
+};
