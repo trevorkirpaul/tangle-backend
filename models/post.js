@@ -17,6 +17,7 @@ const PostSchema = new Schema({
     },
   ],
   likes: [{ type: Schema.Types.ObjectId, ref: 'user' }],
+  dislikes: [{ type: Schema.Types.ObjectId, ref: 'user' }],
 });
 
 const Model = mongoose.model('post', PostSchema);

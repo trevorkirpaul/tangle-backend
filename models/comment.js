@@ -9,6 +9,7 @@ const CommentSchema = new Schema({
   post: { type: Schema.Types.ObjectId, ref: 'post' },
   author: { type: Schema.Types.ObjectId, ref: 'user' },
   likes: [{ type: Schema.Types.ObjectId, ref: 'user' }],
+  dislikes: [{ type: Schema.Types.ObjectId, ref: 'user' }],
 });
 
 const Model = mongoose.model('comment', CommentSchema);

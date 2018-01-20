@@ -86,3 +86,31 @@ exports.removeLike = (req, res, next) => {
     .then(comment => res.send({ removedLike: true, comment }))
     .catch(next);
 };
+
+exports.addDisLike = (req, res, next) => {
+  const token = readToken(req.body.token);
+  const userID = token.userID;
+  const commentID = req.body.commentID;
+
+  Comment.findByIdAndUpdate(
+    commentID,
+    { $addToSet: { dislikes: userID } },
+    { new: true }
+  )
+    .then(comment => res.send({ dislikedComment: true, comment }))
+    .catch(next);
+};
+
+exports.removeDisLike = (req, res, next) => {
+  const token = readToken(req.body.token);
+  const userID = token.userID;
+  const commentID = req.body.commentID;
+
+  Post.findByIdAndUpdate(
+    commentID,
+    { $pull: { dislikes: userID } },
+    { new: true }
+  )
+    .then(comment => res.send({ removedDisLike: true, comment }))
+    .catch(next);
+};

@@ -26,6 +26,10 @@ module.exports = app => {
   app.put('/post/like/add', PostsController.addLike);
   // remove like from post
   app.put('/post/like/remove', PostsController.removeLike);
+  // dislike post
+  app.put('/post/dislike/add', PostsController.addDisLike);
+  // remove dislike from post
+  app.put('/post/dislike/remove', PostsController.removeDisLike);
 
   // COMMENTS
   // create comment
@@ -36,4 +40,8 @@ module.exports = app => {
   app.put('/comment/like/add', CommentController.addLike);
   // remove like from comment
   app.put('/comment/like/remove', CommentController.removeLike);
+  // add dislike to comment
+  app.put('/comment/dislike/add', CommentController.addDisLike);
+  // remove dislike from comment
+  app.put('/comment/dislike/remove', CommentController.removeDisLike);
 };
