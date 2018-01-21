@@ -1,6 +1,11 @@
 const UserController = require('../controllers/User');
 const PostsController = require('../controllers/Posts');
 const CommentController = require('../controllers/Comments');
+const passportService = require('../services/passport');
+const passport = require('passport');
+const reqSignIn = passport.authenticate('local', { session: false });
+const requireAuth = passport.authenticate('jwt', { session: false });
+
 module.exports = app => {
   // root
   app.get('/', (req, res, next) => {
@@ -10,6 +15,8 @@ module.exports = app => {
   // USER
   // create user
   app.post('/user', UserController.create);
+  // local signin
+  app.post('/user/signin', reqSignIn, UserController.signIn);
   // auto sign in
   app.post('/token-signin', UserController.tokenSignIn);
   // delete user

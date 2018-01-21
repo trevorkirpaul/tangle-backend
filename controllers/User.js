@@ -5,8 +5,21 @@ const { createToken, readToken } = jwt;
 exports.create = (req, res, next) => {
   const user = req.body;
   User.create(user)
-    .then(user => res.send({ token: createToken(user._id), id: user._id }))
+    .then(user => res.send({ token: createToken(user._id), userInfo: user }))
     .catch(next);
+};
+
+// standard sign in
+exports.signIn = (req, res, next) => {
+  const user = req.user;
+
+  const token = createToken(user._id);
+
+  res.send({
+    userInfo: user,
+    token,
+    auth: true,
+  });
 };
 
 // auto sign in
@@ -16,7 +29,8 @@ exports.tokenSignIn = (req, res, next) => {
 
   User.findById(userID)
     .then(user => {
-      user && res.send({ auth: true });
+      user &&
+        res.send({ auth: true, userInfo: user, token: createToken(userID) });
       !user && res.send({ auth: false });
     })
     .catch(next);
