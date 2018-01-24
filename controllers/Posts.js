@@ -3,17 +3,36 @@ const User = require('../models/user');
 const jwt = require('../services/jwt');
 const { readToken } = jwt;
 
+exports.fetchPosts = (req, res, next) => {
+  Post.find({})
+    .populate('author')
+    .populate('comments')
+    .populate('likes')
+    .populate('dislikes')
+    .then(posts => res.send({ posts }))
+    .catch(next);
+};
+
+exports.fetchOnePost = (req, res, next) => {
+  const postID = req.body.postID;
+  Post.findById(postID)
+    .populate('author')
+    .populate('comments')
+    .then(post => res.send({ post }))
+    .catch(next);
+};
+
 exports.create = (req, res, next) => {
   const token = readToken(req.body.token);
   const userID = token.userID;
 
-  const post = { ...req.body.post, author: userID };
+  const post = { body: req.body.post, title: req.body.title, author: userID };
 
   Post.create(post)
     .then(post =>
       User.findByIdAndUpdate(userID, { $push: { posts: post } }, { new: true })
     )
-    .then(user => res.send({ user }))
+    .then(user => res.send({ posts: user.posts }))
     .catch(next);
 };
 

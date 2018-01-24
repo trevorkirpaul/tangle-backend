@@ -10,18 +10,23 @@ exports.create = (req, res, next) => {
   const postID = req.body.postID;
 
   const comment = {
-    ...req.body.comment,
+    body: req.body.comment,
     author: userID,
     post: postID,
   };
 
   Comment.create(comment)
-    .then(comments => {
-      const addToPost = Post.findByIdAndUpdate(postID, { $push: { comments } });
-      const addToUser = User.findByIdAndUpdate(userID, { $push: { comments } });
+    .then(comment => {
+      const responseComment = comment;
+      const addToPost = Post.findByIdAndUpdate(postID, {
+        $push: { comments: comment },
+      });
+      const addToUser = User.findByIdAndUpdate(userID, {
+        $push: { comments: comment },
+      });
 
       Promise.all([addToPost, addToUser])
-        .then(comments => res.send({ comment }))
+        .then(() => res.send({ comment: responseComment }))
         .catch(next);
     })
     .catch(next);

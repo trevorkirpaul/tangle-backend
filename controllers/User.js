@@ -49,6 +49,18 @@ exports.delete = (req, res, next) => {
     .catch(next);
 };
 
+// fetch user info for dashboard
+exports.fetchUserInfo = (req, res, next) => {
+  const token = readToken(req.body.token);
+  const userID = token.userID;
+
+  User.findById(userID)
+    .populate('posts')
+    .populate('comments')
+    .then(user => res.send({ user }))
+    .catch(next);
+};
+
 // update user info
 exports.update = (req, res, next) => {
   const token = readToken(req.body.token);

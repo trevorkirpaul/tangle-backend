@@ -19,12 +19,18 @@ module.exports = app => {
   app.post('/user/signin', reqSignIn, UserController.signIn);
   // auto sign in
   app.post('/token-signin', UserController.tokenSignIn);
+  // fetch user info, populated comments and posts
+  app.post('/user/fetch', UserController.fetchUserInfo);
   // delete user
   app.delete('/user', UserController.delete);
   // update user
   app.put('/user', UserController.update);
 
   // POSTS
+  // fetch all posts
+  app.get('/post', PostsController.fetchPosts);
+  // fetch one post
+  app.post('/post/single', PostsController.fetchOnePost);
   // create posts
   app.post('/post', PostsController.create);
   // delete post
@@ -42,7 +48,7 @@ module.exports = app => {
   // create comment
   app.post('/comment', CommentController.create);
   // delete comment
-  app.delete('/comment', CommentController.delete);
+  app.post('/comment/delete', CommentController.delete);
   // add like to comment
   app.put('/comment/like/add', CommentController.addLike);
   // remove like from comment
